@@ -1,0 +1,12 @@
+{
+	"name": "@paradoxum-games/game-analytics",
+	"version": "0.0.2",
+	"description": "",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/paradoxum-games/game-analytics"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC"
+}
