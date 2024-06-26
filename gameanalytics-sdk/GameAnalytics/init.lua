@@ -206,7 +206,7 @@ function ga:filterForBusinessEvent(text: string)
 	return string.gsub(text, "[^A-Za-z0-9%s%-_%.%(%)!%?]", "")
 end
 
-function ga:addBusinessEvent(playerId: number | BusinessEventOptions, options: BusinessEventOptions?)
+function ga:addBusinessEvent(playerId: number, options: BusinessEventOptions)
 	threading:performTaskOnGAThread(function()
 		if not state:isEventSubmissionEnabled() then
 			return
@@ -224,10 +224,6 @@ function ga:addBusinessEvent(playerId: number | BusinessEventOptions, options: B
 			else
 				addToInitializationQueue(ga.addBusinessEvent, ga, playerId, options)
 			end
-			return
-		end
-
-		if not options then
 			return
 		end
 
@@ -255,7 +251,7 @@ function ga:addBusinessEvent(playerId: number | BusinessEventOptions, options: B
 	end)
 end
 
-function ga:addResourceEvent(playerId: number | ResourceEventOptions, options: ResourceEventOptions?)
+function ga:addResourceEvent(playerId: number?, options: ResourceEventOptions)
 	threading:performTaskOnGAThread(function()
 		if not state:isEventSubmissionEnabled() then
 			return
@@ -292,7 +288,7 @@ function ga:addResourceEvent(playerId: number | ResourceEventOptions, options: R
 	end)
 end
 
-function ga:addProgressionEvent(playerId: number | ProgressionEventOptions, options: ProgressionEventOptions?)
+function ga:addProgressionEvent(playerId: number?, options: ProgressionEventOptions)
 	threading:performTaskOnGAThread(function()
 		if not state:isEventSubmissionEnabled() then
 			return
@@ -310,10 +306,6 @@ function ga:addProgressionEvent(playerId: number | ProgressionEventOptions, opti
 			else
 				addToInitializationQueue(ga.addProgressionEvent, ga, playerId, options)
 			end
-			return
-		end
-
-		if not options then
 			return
 		end
 
@@ -337,7 +329,7 @@ function ga:addProgressionEvent(playerId: number | ProgressionEventOptions, opti
 	end)
 end
 
-function ga:addDesignEvent(playerId: number | DesignEventOptions, options: DesignEventOptions?)
+function ga:addDesignEvent(playerId: number?, options: DesignEventOptions)
 	threading:performTaskOnGAThread(function()
 		if not state:isEventSubmissionEnabled() then
 			return
@@ -358,10 +350,6 @@ function ga:addDesignEvent(playerId: number | DesignEventOptions, options: Desig
 			return
 		end
 
-		if not options then
-			return
-		end
-
 		-- Send to events
 		local eventId = options["eventId"] or ""
 		local value = options["value"] or nil
@@ -371,7 +359,7 @@ function ga:addDesignEvent(playerId: number | DesignEventOptions, options: Desig
 	end)
 end
 
-function ga:addErrorEvent(playerId: number | ErrorEventOptions, options: ErrorEventOptions?)
+function ga:addErrorEvent(playerId: number?, options: ErrorEventOptions)
 	threading:performTaskOnGAThread(function()
 		if not state:isEventSubmissionEnabled() then
 			return
@@ -389,10 +377,6 @@ function ga:addErrorEvent(playerId: number | ErrorEventOptions, options: ErrorEv
 			else
 				addToInitializationQueue(ga.addErrorEvent, ga, playerId, options)
 			end
-			return
-		end
-
-		if not options then
 			return
 		end
 
@@ -451,7 +435,7 @@ function ga:setEnabledEventSubmission(flag: boolean)
 	end)
 end
 
-function ga:setCustomDimension01(playerId: number | CustomDimension, dimension: CustomDimension?)
+function ga:setCustomDimension01(playerId: number, dimension: CustomDimension)
 	threading:performTaskOnGAThread(function()
 		if not validation:validateDimension(state._availableCustomDimensions01, dimension) then
 			logger:w(
@@ -477,7 +461,7 @@ function ga:setCustomDimension01(playerId: number | CustomDimension, dimension: 
 	end)
 end
 
-function ga:setCustomDimension02(playerId: number | CustomDimension, dimension: CustomDimension?)
+function ga:setCustomDimension02(playerId: number, dimension: CustomDimension)
 	threading:performTaskOnGAThread(function()
 		if not validation:validateDimension(state._availableCustomDimensions02, dimension) then
 			logger:w(
@@ -503,7 +487,7 @@ function ga:setCustomDimension02(playerId: number | CustomDimension, dimension: 
 	end)
 end
 
-function ga:setCustomDimension03(playerId: number | CustomDimension, dimension: CustomDimension?)
+function ga:setCustomDimension03(playerId: number, dimension: CustomDimension)
 	threading:performTaskOnGAThread(function()
 		if not validation:validateDimension(state._availableCustomDimensions03, dimension) then
 			logger:w(
@@ -566,7 +550,7 @@ function ga:addGameAnalyticsTeleportData(playerIds: { number }, teleportData: Te
 	return teleportData
 end
 
-function ga:getRemoteConfigsValueAsString(playerId: number | RemoteConfigs, options: RemoteConfigs)
+function ga:getRemoteConfigsValueAsString(playerId: number, options: RemoteConfigs)
 	local key = options["key"] or ""
 	local defaultValue = options["defaultValue"] or nil
 	return state:getRemoteConfigsStringValue(playerId, key, defaultValue)
